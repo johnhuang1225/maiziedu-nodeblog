@@ -3,6 +3,15 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+    .alert.alert-danger 這是警告訊息
+
+    - var arr = ['javascript', 'nodejs', 'bootstrap', 'python']
+    ul
+      each item in arr
+        li= item
+
+block scripts
   script.
     $(function() {
       console.log('load jquery ok');
