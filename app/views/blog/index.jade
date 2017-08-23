@@ -1,10 +1,19 @@
 extends layout
 
 block content
-  .container
-    h1= title
-    p Welcome to #{title}
-
+  each post in posts
+    .post
+      h3.post-title 
+        a(href='/posts/view/' + post._id, traget='_blank') #{post.title}
+      .post-abstract #{post.content}
+      .post-meta 
+        span.post-created 時間：&nbsp;#{moment(post.created).format('YYYY-MM-DD')}
+        span.post-author 作者：&nbsp;#{post.author.name}
+        span.post-category 分類：&nbsp;#{post.category.name}
+        span.post-comment 評論：&nbsp;#{post.comments.length || 0}
+        span.post-favorites 讚：&nbsp;#{post.meta.favorites || 0}
+        span.post-link
+          a(href='/posts/view/' + post._id, traget='_blank') 查看全文
 
 
 block scripts
