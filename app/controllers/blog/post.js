@@ -8,12 +8,31 @@ module.exports = function (app) {
 };
 
 router.get('/', function (req, res, next) {
-  Post.find().populate('author').populate('category').exec(function (err, posts) {
-    res.render('blog/index', {
-      posts: posts,
-      pretty: true
+  Post.find({
+      published: true
+    })
+    .sort('created')
+    .populate('author')
+    .populate('category')
+    .exec(function (err, posts) {
+      if (err) next(err);
+
+      var pageNum = Math.abs(parseInt(req.query.page || 1, 10));
+      var pageSize = 10;
+      var totalCount = posts.length;
+      var pageCount = Math.ceil(totalCount / pageSize);
+
+      if (pageNum > pageCount) {
+        pageNum = pageCount;
+      }
+
+      res.render('blog/index', {
+        posts: posts.slice((pageNum-1) * pageSize, pageNum * pageSize),
+        pageNum: pageNum,
+        pageCount: pageCount,
+        pretty: true
+      });
     });
-  });
 });
 
 router.get('/view', function (req, res, next) {});

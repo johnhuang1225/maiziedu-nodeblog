@@ -1,11 +1,24 @@
 extends layout
 
 block content
+  //- 分頁
+  if pageCount > 1
+    nav
+      ul.pagination
+        - var currentPage = 1
+        while currentPage < pageCount
+          if (currentPage === pageNum)   
+            li.active
+              a(href='/posts?page=' + currentPage) #{currentPage++}
+          else
+            li
+              a(href='/posts?page=' + currentPage) #{currentPage++}
+
   each post in posts
     .post
       h3.post-title 
         a(href='/posts/view/' + post._id, traget='_blank') #{post.title}
-      .post-abstract #{post.content}
+      .post-abstract #{truncate(post.content, 300)}
       .post-meta 
         span.post-created 時間：&nbsp;#{moment(post.created).format('YYYY-MM-DD')}
         span.post-author 作者：&nbsp;#{post.author.name}
@@ -14,7 +27,18 @@ block content
         span.post-favorites 讚：&nbsp;#{post.meta.favorites || 0}
         span.post-link
           a(href='/posts/view/' + post._id, traget='_blank') 查看全文
-
+  //- 分頁
+  if pageCount > 1
+    nav
+      ul.pagination
+        - var currentPage = 1
+        while currentPage < pageCount
+          if (currentPage === pageNum)   
+            li.active
+              a(href='/posts?page=' + currentPage) #{currentPage++}
+          else
+            li
+              a(href='/posts?page=' + currentPage) #{currentPage++}
 
 block scripts
   script.

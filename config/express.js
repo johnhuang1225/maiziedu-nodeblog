@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var compress = require('compression');
 var methodOverride = require('method-override');
 var moment = require('moment');
+var truncate = require('truncate');
 
 module.exports = function(app, config) {
   var env = process.env.NODE_ENV || 'development';
@@ -20,6 +21,7 @@ module.exports = function(app, config) {
   app.use(function(req, res, next) {
     app.locals.pageName = req.path;
     app.locals.moment = moment;
+    app.locals.truncate = truncate;
     next();
   });
 
