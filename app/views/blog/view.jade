@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h2.page-header.post-view-header #{post.title}
+  .post.post-view
+    .post-meta 
+      span.post-created 
+        i.fa.fa-calendar&nbsp;#{moment(post.created).format('YYYY-MM-DD')}
+      span.post-author 
+        i.fa.fa-user&nbsp;作者：&nbsp;#{post.author.name}
+      span.post-category 
+        i.fa.fa-shopping-basket&nbsp;分類：&nbsp;
+        a(href='/posts/category/' + post.category.name, target='_blank') #{post.category.name}
+      span.post-comment 
+        i.fa.fa-comment&nbsp;評論：&nbsp;#{post.comments.length || 0}
+      span.post-favorites 
+        a(href='/posts/favorites/' + post._id) 
+          i.fa.fa-star&nbsp;讚：&nbsp; #{post.meta.favorites || 0}
+    .post-content #{post.content}
+    
+
+
+block scripts
+  script.
+    $(function() {
+      console.log('load jquery ok');
+    });

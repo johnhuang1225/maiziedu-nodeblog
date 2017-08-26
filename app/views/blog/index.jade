@@ -18,7 +18,7 @@ block content
   each post in posts
     .post
       h3.post-title 
-        a(href='/posts/view/' + post._id, traget='_blank') #{post.title}
+        a(href='/posts/view/' + post.slug, traget='_blank') #{post.title}
       .post-abstract #{truncate(post.content, 300)}
       .post-meta 
         span.post-created 時間：&nbsp;#{moment(post.created).format('YYYY-MM-DD')}
