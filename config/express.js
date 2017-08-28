@@ -10,6 +10,9 @@ var methodOverride = require('method-override');
 var moment = require('moment');
 var truncate = require('truncate');
 var mongoose = require('mongoose');
+var session = require('express-session');
+var flash = require('connect-flash');
+var messages = require('express-messages');
 
 var Category = mongoose.model('Category');
 
@@ -41,6 +44,20 @@ module.exports = function(app, config) {
     extended: true
   }));
   app.use(cookieParser());
+
+
+  app.use(session({
+    secret: 'nodeblog',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {secure: false}
+  }));
+  app.use(flash());
+  app.use(function(req, res, next) {
+    res.locals.messages = messages(req, res);
+    next();
+  });
+
   app.use(compress());
   app.use(express.static(config.root + '/public'));
   app.use(methodOverride());

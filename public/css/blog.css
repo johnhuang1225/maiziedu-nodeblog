@@ -201,6 +201,20 @@
     text-align: center;
   }
 
+  .post-comments, .post-comment-form {
+    margin-top: 30px;
+  }
+
+  .post-comment-item {
+    border: 1px dotted #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .post-comment-email {
+    border: 1px dotted #ddd;
+  }
+
   /*
    * Footer
    */

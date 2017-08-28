@@ -113,6 +113,38 @@ router.get('/favorites/:id', function (req, res, next) {
       });
 });
 
-router.get('/comment', function (req, res, next) {});
+router.post('/comment/:id', function (req, res, next) {
+  if (!req.body.email) {
+    return next(new Error('no email provided for comment'));
+  }
+  if (!req.body.content) {
+    return next(new Error('no content provided for comment'));
+  }
+
+  var condition = {};
+  try {
+    condition._id = mongoose.Types.ObjectId(req.params.id);
+  } catch (error) {
+    condition._id = req.prarms.id;
+  }
+
+  Post.findOne(condition).exec(function(err, post) {
+    if (err) {
+      return next(err);
+    }
+    var comment = {
+      email: req.body.email,
+      content: req.body.content,
+      created: new Date()
+    };
+    post.comments.unshift(comment);
+    post.markModified('comments');
+    post.save(function(err, post) {
+      req.flash('info', '評論添加成功')
+      res.redirect('/posts/view/' + post.slug);
+    });
+  });
+
+});
 
 router.get('/favorites', function (req, res, next) {});
