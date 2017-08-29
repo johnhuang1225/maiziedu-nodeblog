@@ -1,0 +1,52 @@
+extends ../layout
+
+block content
+  h2.page-header 文章列表
+
+  table.table.table-bordered
+    thead
+      tr
+        th(width="30%") 標題
+        th 分類
+        th 作者
+        th 發表時間
+        th 被讚
+        th 評論
+        th 狀態
+        th 管理
+    tbody
+    each post in posts
+      tr
+        td 
+          a(href='/posts/view/' + post._id, traget='_blank') #{post.title}
+        td #{post.category.name}
+        td #{post.author.email}
+        td #{moment(post.created).format('YYYY-MM-DD HH:mm:ss')}
+        td #{post.meta.favorites.length || 0}
+        td #{post.comments.length || 0}
+        td #{post.published ? '已發佈' : '未發佈'}
+        td 
+          a(href='/posts/view/' + post._id, target='_blank', class='btn btn-sm btn-success') 查看
+          &nbsp;&nbsp;
+          a(href='/admin/posts/edit/' + post._id, class='btn btn-sm btn-info') 編輯
+          &nbsp;&nbsp;
+          a(href='/admin/posts/delete/' + post._id, class='btn btn-sm btn-danger') 刪除
+
+  //- 分頁
+  if pageCount > 1
+    nav
+      ul.pagination
+        - var currentPage = 1
+        while currentPage < pageCount
+          if (currentPage === pageNum)   
+            li.active
+              a(href='/admin/posts?page=' + currentPage) #{currentPage++}
+          else
+            li
+              a(href='/admin/posts?page=' + currentPage) #{currentPage++}
+
+block scripts
+  script.
+    $(function() {
+      console.log('load jquery ok');
+    });

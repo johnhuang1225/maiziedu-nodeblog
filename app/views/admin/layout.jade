@@ -31,8 +31,8 @@ block main
       .col-sm-3.col-md-2.sidebar
         ul.nav.nav-sidebar
           li.active
-            a(href='/admin/posts/list')
-              i.fa.fa-files-o &nbsp;文章烈表 
+            a(href='/admin/posts')
+              i.fa.fa-files-o &nbsp;文章列表 
           li
             a(href='/admin/posts/add') 
               i.fa.fa-file-o &nbsp;添加文章
@@ -48,4 +48,5 @@ block main
               i.fa.fa-lock &nbsp;修改密碼
 
       .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+        != messages()
         block content
