@@ -6,13 +6,69 @@ block content
   table.table.table-bordered
     thead
       tr
-        th(width="30%") 標題
-        th 分類
-        th 作者
-        th 發表時間
+        th(width="30%") 
+          if sortby === 'title'
+            if sortdir === 'desc'
+              a(href="/admin/posts?page=" + pageNum + "&sortby=title&sortdir=asc")
+                i.fa.fa-arrow-down
+                &nbsp;標題
+            else
+              a(href="/admin/posts?page=" + pageNum + "&sortby=title&sortdir=desc")
+                i.fa.fa-arrow-up
+                &nbsp;標題
+          else
+            a(href="/admin/posts?page=" + pageNum + "&sortby=title&sortdir=desc") 標題
+        th
+          if sortby === 'category'
+            if sortdir === 'desc'
+              a(href="/admin/posts?page=" + pageNum + "&sortby=category&sortdir=asc")
+                i.fa.fa-arrow-down
+                &nbsp;分類
+            else
+              a(href="/admin/posts?page=" + pageNum + "&sortby=category&sortdir=desc")
+                i.fa.fa-arrow-up
+                &nbsp;分類
+          else
+            a(href="/admin/posts?page=" + pageNum + "&sortby=category&sortdir=desc") 分類
+        th 
+          if sortby === 'author'
+            if sortdir === 'desc'
+              a(href="/admin/posts?page=" + pageNum + "&sortby=author&sortdir=asc")
+                i.fa.fa-arrow-down
+                &nbsp;作者
+            else
+              a(href="/admin/posts?page=" + pageNum + "&sortby=author&sortdir=desc")
+                i.fa.fa-arrow-up
+                &nbsp;作者
+          else
+            a(href="/admin/posts?page=" + pageNum + "&sortby=author&sortdir=desc") 作者
+        
+        th 
+          if sortby === 'created'
+            if sortdir === 'desc'
+              a(href="/admin/posts?page=" + pageNum + "&sortby=created&sortdir=asc")
+                i.fa.fa-arrow-down
+                &nbsp;發表時間
+            else
+              a(href="/admin/posts?page=" + pageNum + "&sortby=created&sortdir=desc")
+                i.fa.fa-arrow-up
+                &nbsp;發表時間
+          else
+            a(href="/admin/posts?page=" + pageNum + "&sortby=created&sortdir=desc") 發表時間
         th 被讚
         th 評論
-        th 狀態
+        th 
+          if sortby === 'published'
+            if sortdir === 'desc'
+              a(href="/admin/posts?page=" + pageNum + "&sortby=published&sortdir=asc")
+                i.fa.fa-arrow-down
+                &nbsp;狀態
+            else
+              a(href="/admin/posts?page=" + pageNum + "&sortby=published&sortdir=desc")
+                i.fa.fa-arrow-up
+                &nbsp;狀態
+          else
+            a(href="/admin/posts?page=" + pageNum + "&sortby=published&sortdir=desc") 狀態
         th 管理
     tbody
     each post in posts
@@ -40,10 +96,10 @@ block content
         while currentPage < pageCount
           if (currentPage === pageNum)   
             li.active
-              a(href='/admin/posts?page=' + currentPage) #{currentPage++}
+              a(href='/admin/posts?page=' + currentPage + "&sortby=" + sortby + "&sortdir=" + sortdir) #{currentPage++}
           else
             li
-              a(href='/admin/posts?page=' + currentPage) #{currentPage++}
+              a(href='/admin/posts?page=' + currentPage + "&sortby=" + sortby + "&sortdir=" + sortdir) #{currentPage++}
 
 block scripts
   script.

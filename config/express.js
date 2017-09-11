@@ -25,6 +25,7 @@ module.exports = function(app, config) {
   app.set('view engine', 'jade');
 
   app.use(function(req, res, next) {
+    // console.log(`##### req.path: ${req.path}`)
     app.locals.pageName = req.path;
     app.locals.moment = moment;
     app.locals.truncate = truncate;
